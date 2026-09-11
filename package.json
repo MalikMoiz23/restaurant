@@ -1,0 +1,24 @@
+{
+  "name": "mesa-pos",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "db:reset": "node scripts/db.mjs reset",
+    "db:schema": "node scripts/db.mjs schema",
+    "db:seed": "node scripts/db.mjs seed",
+    "dev": "node scripts/dev.mjs",
+    "dev:api": "npm run dev --workspace @mesa/api",
+    "dev:web": "npm run dev --workspace @mesa/web",
+    "build": "npm run build --workspace @mesa/web",
+    "demo": "node scripts/demo.mjs",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
