@@ -1,0 +1,242 @@
+@import 'tailwindcss';
+
+/* =====================================================================
+   Mesa design tokens.
+
+   The palette is drawn from Portuguese building materials rather than a
+   generic SaaS ramp: azulejo cobalt, limewashed plaster, terracotta roof
+   tile, olive. "azul" is structure and trust, "barro" is the accent that
+   asks for a decision, "cal" carries every surface.
+   ===================================================================== */
+@theme {
+  --font-display: 'Fraunces Variable', 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
+
+  /* Azulejo cobalt — primary structure */
+  --color-azul-50: #f1f6fb;
+  --color-azul-100: #dde9f5;
+  --color-azul-200: #bcd4ea;
+  --color-azul-300: #8db7da;
+  --color-azul-400: #5793c5;
+  --color-azul-500: #2a5c8f;
+  --color-azul-600: #1d3f63;
+  --color-azul-700: #17334f;
+  --color-azul-800: #122840;
+  --color-azul-900: #0c1c2e;
+  --color-azul-950: #07121e;
+
+  /* Terracotta — the accent that asks for action */
+  --color-barro-50: #fdf4f0;
+  --color-barro-100: #fae5dc;
+  --color-barro-200: #f3c8b6;
+  --color-barro-300: #e9a487;
+  --color-barro-400: #d98468;
+  --color-barro-500: #c1613c;
+  --color-barro-600: #a44e2d;
+  --color-barro-700: #843f26;
+
+  /* Limewash — every surface and all body text */
+  --color-cal-50: #faf8f4;
+  --color-cal-100: #f4efe6;
+  --color-cal-200: #e8e0d2;
+  --color-cal-300: #d5c9b6;
+  --color-cal-400: #b0a291;
+  --color-cal-500: #8a7d6d;
+  --color-cal-600: #6b6155;
+  --color-cal-700: #4e463d;
+  --color-cal-800: #332e28;
+  --color-cal-900: #1f1c18;
+
+  /* Olive — quiet confirmation */
+  --color-oliva-300: #b3bd8f;
+  --color-oliva-400: #8d9a63;
+  --color-oliva-500: #6f7d49;
+  --color-oliva-600: #57633a;
+
+  /* Service states, used identically on every screen */
+  --color-estado-free: #6f7d49;
+  --color-estado-ordering: #2a5c8f;
+  --color-estado-eating: #c99a3f;
+  --color-estado-awaiting: #c1613c;
+  --color-estado-cleaning: #8a7d6d;
+
+  --shadow-plate: 0 1px 2px rgb(31 28 24 / 0.04), 0 8px 24px -8px rgb(31 28 24 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(31 28 24 / 0.05), 0 18px 40px -12px rgb(31 28 24 / 0.22);
+  --shadow-inset-hairline: inset 0 0 0 1px rgb(31 28 24 / 0.07);
+
+  --radius-plate: 1.25rem;
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1);
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    /* Tablet app: never let a stray drag bounce the whole shell. */
+    overscroll-behavior: none;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-cal-50);
+    color: var(--color-cal-900);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv05' 1, 'ss03' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Tabular figures everywhere money or a clock is shown, so digits
+     never shift width as values tick over. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  h1, h2, h3, .display {
+    font-family: var(--font-display);
+    font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 36;
+    letter-spacing: -0.015em;
+  }
+
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  input:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--color-azul-400);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-azul-200);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Azulejo texture. A single repeating tile drawn as a data URI so the
+   pattern costs no request and still works with the network down.
+   --------------------------------------------------------------------- */
+@utility azulejo {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%231d3f63' stroke-width='1.1' stroke-opacity='0.5'%3E%3Cpath d='M24 4 L44 24 L24 44 L4 24 Z'/%3E%3Cpath d='M24 14 L34 24 L24 34 L14 24 Z'/%3E%3Ccircle cx='24' cy='24' r='2.5'/%3E%3Cpath d='M0 0 L8 8 M48 0 L40 8 M0 48 L8 40 M48 48 L40 40'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 48px 48px;
+}
+
+@utility azulejo-soft {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1' stroke-opacity='0.6'%3E%3Cpath d='M18 3 L33 18 L18 33 L3 18 Z'/%3E%3Ccircle cx='18' cy='18' r='3.5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 36px 36px;
+}
+
+@utility hairline {
+  box-shadow: var(--shadow-inset-hairline);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-cal-300) transparent;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-cal-300);
+    border-radius: 99px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Animation. Everything here is decorative reinforcement of a state
+   change; the reduced-motion block at the bottom switches all of it off.
+   --------------------------------------------------------------------- */
+
+@keyframes mesa-rise {
+  from { opacity: 0; transform: translateY(12px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes mesa-shimmer {
+  from { background-position: -220% 0; }
+  to   { background-position: 220% 0; }
+}
+
+/* Draws attention to a brand-new kitchen ticket without a hard flash. */
+@keyframes mesa-ring {
+  0%   { box-shadow: 0 0 0 0 rgb(193 97 60 / 0.55); }
+  70%  { box-shadow: 0 0 0 18px rgb(193 97 60 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(193 97 60 / 0); }
+}
+
+@keyframes mesa-steam {
+  0%   { opacity: 0; transform: translateY(2px) scaleY(0.9); }
+  40%  { opacity: 0.75; }
+  100% { opacity: 0; transform: translateY(-12px) scaleY(1.25); }
+}
+
+@keyframes mesa-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* The live-connection dot on every screen. */
+@keyframes mesa-beat {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.82); }
+}
+
+.anim-rise { animation: mesa-rise 0.42s var(--ease-spring) both; }
+.anim-ring { animation: mesa-ring 1.8s ease-out 3; }
+.anim-beat { animation: mesa-beat 2s ease-in-out infinite; }
+.anim-spin { animation: mesa-spin 0.7s linear infinite; }
+.anim-steam { animation: mesa-steam 2.6s ease-out infinite; }
+
+.skeleton {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-cal-100) 30%,
+    var(--color-cal-200) 48%,
+    var(--color-cal-100) 66%
+  );
+  background-size: 220% 100%;
+  animation: mesa-shimmer 1.5s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------
+   Kitchen display. Always dark: it is read from across a bright, hot
+   room, where a light interface is a glare source.
+   --------------------------------------------------------------------- */
+.theme-kds {
+  background: var(--color-azul-950);
+  color: var(--color-cal-100);
+  color-scheme: dark;
+}
+
+.theme-kds .scroll-thin {
+  scrollbar-color: var(--color-azul-700) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
