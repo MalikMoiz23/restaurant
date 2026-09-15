@@ -103,6 +103,24 @@ export const pt = {
     addToOrder: 'Adicionar ao pedido',
     quantity: 'Quantidade',
     categoryAll: 'Tudo',
+    tapToAdd: 'Toque num prato para o adicionar',
+    details: 'Detalhes',
+    inOrder: 'No seu pedido',
+    removeAll: 'Retirar',
+  },
+
+  help: {
+    title: 'Como funciona',
+    step1: 'Toque nos pratos que quer',
+    step1body: 'Toque uma vez para adicionar. Toque outra vez para pedir mais um.',
+    step2: 'Reveja o pedido',
+    step2body: 'Veja tudo o que escolheu e altere as quantidades.',
+    step3: 'Envie para a cozinha',
+    step3body: 'A cozinha começa a preparar e você acompanha aqui.',
+    step4: 'Pague no balcão',
+    step4body: 'Diga o número da mesa. Pode pedir mais durante a refeição.',
+    gotIt: 'Percebi, vamos começar',
+    showAgain: 'Como funciona',
   },
 
   cart: {
@@ -120,6 +138,15 @@ export const pt = {
     remove: 'Remover',
     lines: '{n} linhas',
     reorderHint: 'Pode pedir mais durante a refeição — sem fechar a mesa.',
+    review: 'Rever o seu pedido',
+    estimate: 'Pronto em cerca de {n} min',
+    estimateShort: '~{n} min',
+    viewOrder: 'Ver o pedido',
+    sentTitle: 'Pedido enviado para a cozinha',
+    sentNumber: 'É o pedido número {n}',
+    sentReady: 'Deve ficar pronto por volta das {t}',
+    addMoreNow: 'Adicionar mais pratos',
+    trackOrder: 'Acompanhar o pedido',
   },
 
   orders: {
@@ -141,6 +168,11 @@ export const pt = {
       served: 'Servido. Bom apetite!',
       cancelled: 'Este pedido foi cancelado.',
     },
+    readyIn: 'Pronto daqui a cerca de {n} min',
+    readyAt: 'Previsto para as {t}',
+    readyNow: 'Deve estar a chegar à mesa',
+    takingLonger: 'Está a demorar um pouco mais do que o previsto',
+    estimateNote: 'Tempo estimado. Pode variar com o movimento da casa.',
   },
 
   bill: {

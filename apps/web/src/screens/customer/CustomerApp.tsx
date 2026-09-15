@@ -3,9 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { api, type SessionDetail, type Menu } from '../../lib/api';
 import { useQuery, useLiveEvents, useConnection } from '../../lib/live';
+import { euro } from '../../lib/format';
 import { useI18n } from '../../i18n';
 import { Icon } from '../../lib/Icon';
-import { useCart, cartCount } from '../../store';
+import { useCart, cartCount, cartTotalCents, cartEstimateMinutes } from '../../store';
 import {
   Button, ConnectionPill, EmptyState, Skeleton, SPRING, cn,
 } from '../../ui';
@@ -15,6 +16,7 @@ import { CartSheet } from './CartSheet';
 import { OrdersView } from './OrdersView';
 import { BillView } from './BillView';
 import { WaiterCallSheet } from './WaiterCall';
+import { HowItWorks, shouldShowHelp, markHelpSeen } from './HowItWorks';
 
 type Tab = 'menu' | 'orders' | 'bill';
 
@@ -32,6 +34,7 @@ export function CustomerApp() {
   const [tab, setTab] = useState<Tab>('menu');
   const [cartOpen, setCartOpen] = useState(false);
   const [callOpen, setCallOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(shouldShowHelp);
 
   const setTable = useCart((s) => s.setTable);
   const lines = useCart((s) => s.lines);
@@ -138,6 +141,14 @@ export function CustomerApp() {
             />
             <LanguageSwitch />
             <button
+              onClick={() => setHelpOpen(true)}
+              className="grid size-10 shrink-0 place-items-center rounded-xl bg-white text-cal-500 hairline transition hover:bg-cal-100 hover:text-azul-600"
+              aria-label={t('help.showAgain')}
+              title={t('help.showAgain')}
+            >
+              <Icon name="info" className="size-5" />
+            </button>
+            <button
               onClick={() => setCallOpen(true)}
               className={cn(
                 'relative inline-flex h-10 items-center gap-2 rounded-xl px-3 text-sm font-medium transition',
@@ -224,19 +235,24 @@ export function CustomerApp() {
             className="fixed inset-x-0 bottom-0 z-40 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
           >
             <div className="mx-auto max-w-2xl">
-              <Button
-                size="xl"
-                variant="primary"
-                block
+              <button
                 onClick={() => setCartOpen(true)}
-                className="shadow-lift"
+                className="flex w-full items-center gap-3 rounded-2xl bg-azul-600 px-5 py-3.5 text-white shadow-lift transition active:scale-[0.99] hover:bg-azul-700"
               >
-                <span className="grid size-7 place-items-center rounded-full bg-white/20 text-sm font-bold tnum">
+                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/20 text-base font-bold tnum">
                   {count}
                 </span>
-                {t('cart.title')}
-                <Icon name="chevron-right" className="ml-auto size-5" />
-              </Button>
+                <span className="min-w-0 flex-1 text-left">
+                  <span className="block text-base font-semibold">{t('cart.viewOrder')}</span>
+                  <span className="block text-xs text-azul-200">
+                    {t('cart.estimate', { n: cartEstimateMinutes(lines) })}
+                  </span>
+                </span>
+                <span className="shrink-0 text-lg font-semibold tnum">
+                  {euro(cartTotalCents(lines), locale)}
+                </span>
+                <Icon name="chevron-right" className="size-5 shrink-0" />
+              </button>
             </div>
           </motion.div>
         )}
@@ -246,10 +262,21 @@ export function CustomerApp() {
         open={cartOpen}
         onClose={() => setCartOpen(false)}
         sessionId={activeSession.id}
+        onBrowse={() => setTab('menu')}
         onSent={() => {
-          setCartOpen(false);
+          // The sheet swaps to its own confirmation, so it stays open;
+          // we only refresh the data behind it and pre-select Orders so
+          // closing the confirmation lands on the tracker.
           session.reload();
           setTab('orders');
+        }}
+      />
+
+      <HowItWorks
+        open={helpOpen}
+        onClose={() => {
+          setHelpOpen(false);
+          markHelpSeen();
         }}
       />
 

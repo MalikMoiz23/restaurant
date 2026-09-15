@@ -91,6 +91,24 @@ export const es: LocaleDict = {
     addToOrder: 'Añadir al pedido',
     quantity: 'Cantidad',
     categoryAll: 'Todo',
+    tapToAdd: 'Toque un plato para añadirlo',
+    details: 'Detalles',
+    inOrder: 'En su pedido',
+    removeAll: 'Quitar',
+  },
+
+  help: {
+    title: 'Cómo funciona',
+    step1: 'Toque los platos que quiera',
+    step1body: 'Toque una vez para añadir. Toque otra vez para pedir uno más.',
+    step2: 'Revise su pedido',
+    step2body: 'Vea todo lo que eligió y cambie las cantidades.',
+    step3: 'Envíelo a la cocina',
+    step3body: 'La cocina empieza a preparar y usted lo sigue aquí.',
+    step4: 'Pague en barra',
+    step4body: 'Solo diga el número de mesa. Puede pedir más durante la comida.',
+    gotIt: 'Entendido, empezamos',
+    showAgain: 'Cómo funciona',
   },
 
   cart: {
@@ -108,6 +126,15 @@ export const es: LocaleDict = {
     remove: 'Quitar',
     lines: '{n} líneas',
     reorderHint: 'Puede pedir más durante la comida — la mesa sigue abierta.',
+    review: 'Revise su pedido',
+    estimate: 'Listo en unos {n} min',
+    estimateShort: '~{n} min',
+    viewOrder: 'Ver el pedido',
+    sentTitle: 'Pedido enviado a cocina',
+    sentNumber: 'Es el pedido número {n}',
+    sentReady: 'Debería estar listo sobre las {t}',
+    addMoreNow: 'Añadir más platos',
+    trackOrder: 'Seguir el pedido',
   },
 
   orders: {
@@ -129,6 +156,11 @@ export const es: LocaleDict = {
       served: 'Servido. ¡Buen provecho!',
       cancelled: 'Este pedido se ha cancelado.',
     },
+    readyIn: 'Listo en unos {n} min',
+    readyAt: 'Previsto sobre las {t}',
+    readyNow: 'Debería estar llegando a la mesa',
+    takingLonger: 'Está tardando un poco más de lo previsto',
+    estimateNote: 'Tiempo estimado. Puede variar según el movimiento de la casa.',
   },
 
   bill: {

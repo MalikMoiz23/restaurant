@@ -244,7 +244,11 @@ function Ticket({
         </div>
         <div className="text-right">
           <p className={cn('text-lg font-bold tnum', tone.text)}>{elapsed(seconds)}</p>
-          <p className="text-[11px] text-azul-400">{clock(order.placed_at, locale)}</p>
+          {/* The same estimate the guest was quoted, so the kitchen can
+              see at a glance which tickets are about to disappoint. */}
+          <p className="text-[11px] text-azul-400 tnum">
+            {clock(order.placed_at, locale)} → {clock(order.ready_estimate_at, locale)}
+          </p>
         </div>
       </div>
 

@@ -74,6 +74,7 @@ export type CartLine = {
   qty: number;
   note: string;
   seatNo: number | null;
+  prepMinutes: number;
 };
 
 type CartState = {
@@ -126,6 +127,7 @@ export const useCart = create<CartState>()(
                 qty,
                 note,
                 seatNo,
+                prepMinutes: item.prep_minutes,
               },
             ],
           };
@@ -168,3 +170,21 @@ export const cartTotalCents = (lines: CartLine[]) =>
 
 export const cartCount = (lines: CartLine[]) =>
   lines.reduce((sum, l) => sum + l.qty, 0);
+
+/** How many of one dish are currently in the cart, across all its lines. */
+export const cartQtyFor = (lines: CartLine[], menuItemId: number) =>
+  lines.reduce((sum, l) => (l.menuItemId === menuItemId ? sum + l.qty : sum), 0);
+
+/**
+ * Preview of the wait, shown before the order is sent.
+ *
+ * Mirrors estimateMinutes in apps/api/src/core.ts. The server's number
+ * is authoritative once the order exists; this only exists so the guest
+ * sees a figure while still choosing. Keep the two in step.
+ */
+export function cartEstimateMinutes(lines: CartLine[]): number {
+  if (!lines.length) return 0;
+  const slowest = Math.max(...lines.map((l) => l.prepMinutes));
+  const plates = lines.reduce((sum, l) => sum + l.qty, 0);
+  return slowest + Math.min(15, Math.ceil((plates - 1) * 0.5));
+}

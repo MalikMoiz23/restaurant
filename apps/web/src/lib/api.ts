@@ -83,6 +83,7 @@ export type OrderLine = {
   seatNo: number | null;
   station: Station;
   glyph: string;
+  prepMinutes: number;
 };
 
 export type Order = {
@@ -95,6 +96,9 @@ export type Order = {
   ready_at: string | null;
   served_at: string | null;
   items: OrderLine[];
+  /** Heuristic from each dish's prep time - see estimateMinutes in the API. */
+  estimated_minutes: number;
+  ready_estimate_at: string;
 };
 
 export type SessionDetail = {
@@ -144,6 +148,8 @@ export type KdsOrder = {
   table_number: number;
   zone_name: string;
   guest_count: number;
+  estimated_minutes: number;
+  ready_estimate_at: string;
   items: Array<{
     id: string;
     name: string;
@@ -362,7 +368,10 @@ export const api = {
     items: Array<{ menuItemId: number; qty: number; note?: string; seatNo?: number | null }>,
     note = '',
   ) =>
-    request<{ id: string; seq: number; status: OrderStatus }>(
+    request<{
+      id: string; seq: number; status: OrderStatus;
+      estimatedMinutes: number; readyEstimateAt: string;
+    }>(
       '/api/orders',
       {
         method: 'POST',

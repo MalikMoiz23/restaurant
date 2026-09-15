@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import type { SessionDetail, OrderStatus } from '../../lib/api';
+import type { SessionDetail, OrderStatus, Order } from '../../lib/api';
 import { clock, euro } from '../../lib/format';
 import { DishArt } from '../../lib/DishArt';
 import { Icon } from '../../lib/Icon';
@@ -120,6 +121,7 @@ export function OrdersView({
                 <p className="mt-3 text-center text-sm text-cal-600">
                   {t(`orders.statusHint.${order.status}` as never)}
                 </p>
+                <Countdown order={order} />
               </div>
             ) : (
               <div className="px-4 pt-4">
@@ -161,9 +163,68 @@ export function OrdersView({
         );
       })}
 
-      <Button variant="secondary" block size="lg" onClick={onBrowse} icon="plus">
-        {t('cart.addMore')}
+      <Button variant="primary" block size="xl" onClick={onBrowse} icon="plus">
+        {t('cart.addMoreNow')}
       </Button>
+    </div>
+  );
+}
+
+/**
+ * Live countdown to the estimated ready time.
+ *
+ * Once the kitchen marks an order ready the estimate is irrelevant, so
+ * it stops. If the clock runs past the estimate we say so plainly
+ * rather than showing a negative number or silently freezing at zero -
+ * a guest who can see the kitchen is running late will wait; one who
+ * thinks the tablet is broken will get up and complain.
+ */
+function Countdown({ order }: { order: Order }) {
+  const { t, locale } = useI18n();
+  const [, tick] = useState(0);
+
+  useEffect(() => {
+    if (order.status === 'ready' || order.status === 'served') return;
+    const id = setInterval(() => tick((n) => n + 1), 15_000);
+    return () => clearInterval(id);
+  }, [order.status]);
+
+  if (order.status === 'served' || order.status === 'cancelled') return null;
+
+  if (order.status === 'ready') {
+    return (
+      <p className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-oliva-500/12 px-3 py-2.5 text-sm font-semibold text-oliva-600">
+        <Icon name="check" className="size-4" strokeWidth={2.4} />
+        {t('orders.readyNow')}
+      </p>
+    );
+  }
+
+  const remainingMs = new Date(order.ready_estimate_at).getTime() - Date.now();
+  const remainingMin = Math.ceil(remainingMs / 60_000);
+  const late = remainingMin <= 0;
+
+  return (
+    <div
+      className={cn(
+        'mt-3 rounded-xl px-3 py-2.5 text-center',
+        late ? 'bg-amber-50' : 'bg-azul-50',
+      )}
+    >
+      <p
+        className={cn(
+          'flex items-center justify-center gap-2 text-sm font-semibold',
+          late ? 'text-amber-800' : 'text-azul-800',
+        )}
+      >
+        <Icon name="clock" className="size-4" />
+        {late ? t('orders.takingLonger') : t('orders.readyIn', { n: remainingMin })}
+      </p>
+      {!late && (
+        <p className="mt-0.5 text-xs text-azul-600 tnum">
+          {t('orders.readyAt', { t: clock(order.ready_estimate_at, locale) })}
+        </p>
+      )}
     </div>
   );
 }

@@ -91,6 +91,24 @@ export const en: LocaleDict = {
     addToOrder: 'Add to order',
     quantity: 'Quantity',
     categoryAll: 'Everything',
+    tapToAdd: 'Tap a dish to add it',
+    details: 'Details',
+    inOrder: 'In your order',
+    removeAll: 'Remove',
+  },
+
+  help: {
+    title: 'How it works',
+    step1: 'Tap the dishes you want',
+    step1body: 'Tap once to add. Tap again for another one.',
+    step2: 'Check your order',
+    step2body: 'See everything you picked and change the amounts.',
+    step3: 'Send it to the kitchen',
+    step3body: 'The kitchen starts cooking and you follow it here.',
+    step4: 'Pay at the counter',
+    step4body: 'Just give your table number. You can order more during the meal.',
+    gotIt: 'Got it, let’s start',
+    showAgain: 'How it works',
   },
 
   cart: {
@@ -108,6 +126,15 @@ export const en: LocaleDict = {
     remove: 'Remove',
     lines: '{n} lines',
     reorderHint: 'You can order more during the meal — the table stays open.',
+    review: 'Check your order',
+    estimate: 'Ready in about {n} min',
+    estimateShort: '~{n} min',
+    viewOrder: 'See the order',
+    sentTitle: 'Order sent to the kitchen',
+    sentNumber: 'This is order number {n}',
+    sentReady: 'It should be ready around {t}',
+    addMoreNow: 'Add more dishes',
+    trackOrder: 'Follow the order',
   },
 
   orders: {
@@ -129,6 +156,11 @@ export const en: LocaleDict = {
       served: 'Served. Enjoy!',
       cancelled: 'This order was cancelled.',
     },
+    readyIn: 'Ready in about {n} min',
+    readyAt: 'Expected around {t}',
+    readyNow: 'Should be arriving at your table',
+    takingLonger: 'Taking a little longer than expected',
+    estimateNote: 'Estimated time. It can vary with how busy the kitchen is.',
   },
 
   bill: {

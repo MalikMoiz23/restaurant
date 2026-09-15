@@ -91,6 +91,24 @@ export const fr: LocaleDict = {
     addToOrder: 'Ajouter à la commande',
     quantity: 'Quantité',
     categoryAll: 'Tout',
+    tapToAdd: 'Touchez un plat pour l’ajouter',
+    details: 'Détails',
+    inOrder: 'Dans votre commande',
+    removeAll: 'Retirer',
+  },
+
+  help: {
+    title: 'Comment ça marche',
+    step1: 'Touchez les plats que vous voulez',
+    step1body: 'Touchez une fois pour ajouter. Touchez encore pour en prendre un autre.',
+    step2: 'Vérifiez votre commande',
+    step2body: 'Voyez tout ce que vous avez choisi et modifiez les quantités.',
+    step3: 'Envoyez-la en cuisine',
+    step3body: 'La cuisine commence à préparer et vous suivez ici.',
+    step4: 'Payez au comptoir',
+    step4body: 'Donnez simplement votre numéro de table. Vous pouvez commander encore pendant le repas.',
+    gotIt: 'Compris, commençons',
+    showAgain: 'Comment ça marche',
   },
 
   cart: {
@@ -108,6 +126,15 @@ export const fr: LocaleDict = {
     remove: 'Retirer',
     lines: '{n} lignes',
     reorderHint: 'Vous pouvez commander pendant tout le repas — la table reste ouverte.',
+    review: 'Vérifiez votre commande',
+    estimate: 'Prêt dans environ {n} min',
+    estimateShort: '~{n} min',
+    viewOrder: 'Voir la commande',
+    sentTitle: 'Commande envoyée en cuisine',
+    sentNumber: 'C’est la commande numéro {n}',
+    sentReady: 'Elle devrait être prête vers {t}',
+    addMoreNow: 'Ajouter d’autres plats',
+    trackOrder: 'Suivre la commande',
   },
 
   orders: {
@@ -129,6 +156,11 @@ export const fr: LocaleDict = {
       served: 'Servie. Bon appétit !',
       cancelled: 'Cette commande a été annulée.',
     },
+    readyIn: 'Prête dans environ {n} min',
+    readyAt: 'Prévue vers {t}',
+    readyNow: 'Elle devrait arriver à votre table',
+    takingLonger: 'Cela prend un peu plus de temps que prévu',
+    estimateNote: 'Temps estimé. Il peut varier selon l’affluence.',
   },
 
   bill: {
