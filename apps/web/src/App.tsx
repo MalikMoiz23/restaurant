@@ -4,6 +4,7 @@ import { Launcher } from './screens/Launcher';
 import { CustomerApp } from './screens/customer/CustomerApp';
 import { KitchenApp } from './screens/kitchen/KitchenApp';
 import { CounterApp } from './screens/counter/CounterApp';
+import { WaiterApp } from './screens/waiter/WaiterApp';
 import { useAuth } from './store';
 
 export function App() {
@@ -18,6 +19,7 @@ export function App() {
       <Route path="/" element={<Launcher />} />
       <Route path="/mesa/:tableNumber/*" element={<CustomerApp />} />
       <Route path="/cozinha" element={<KitchenApp />} />
+      <Route path="/sala" element={<WaiterApp />} />
       <Route path="/balcao/*" element={<CounterApp />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

@@ -21,6 +21,8 @@ export const pt = {
     kitchenDesc: 'Pedidos ao vivo, por estação, com tempos de espera.',
     counter: 'Balcão & Gestão',
     counterDesc: 'Contas, divisões, mapa de salas e relatórios.',
+    waiter: 'Sala (Empregado)',
+    waiterDesc: 'Chamadas das mesas e pratos prontos a servir.',
     demoTable: 'Mesa de demonstração',
   },
 
@@ -248,6 +250,27 @@ export const pt = {
       manager: 'Gerente',
     },
     demoHint: 'Ambiente de demonstração — PINs: 1234 gerente · 2345 caixa · 3456 cozinha',
+  },
+
+waiter: {
+    title: 'Sala',
+    calls: 'Chamadas',
+    callsNone: 'Sem chamadas',
+    callsNoneBody: 'Quando uma mesa chamar, aparece aqui de imediato.',
+    onMyWay: 'A caminho',
+    toDeliver: 'Pronto a servir',
+    toDeliverNone: 'Nada pronto de momento',
+    toDeliverNoneBody: 'Quando a cozinha marcar um pedido como pronto, aparece aqui.',
+    deliver: 'Entregue na mesa',
+    tables: 'Mesas',
+    tablesNone: 'Nenhuma mesa aberta',
+    waiting: 'à espera há {t}',
+    urgent: 'À espera há muito tempo',
+    newCall: 'Mesa {n} chamou',
+    orderReady: 'Mesa {n} — pedido pronto',
+    alertOn: 'Alertas ligados',
+    alertOff: 'Ligar alertas',
+    alertHint: 'Toque para permitir vibração e som nas novas chamadas.',
   },
 
   counter: {

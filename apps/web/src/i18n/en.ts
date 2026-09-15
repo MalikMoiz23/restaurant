@@ -13,6 +13,8 @@ export const en: LocaleDict = {
     kitchenDesc: 'Live tickets by station, with waiting times.',
     counter: 'Counter & Management',
     counterDesc: 'Bills, splits, floor plan and reporting.',
+    waiter: 'Floor (Waiter)',
+    waiterDesc: 'Table calls and dishes ready to run.',
     demoTable: 'Demo table',
   },
 
@@ -222,6 +224,27 @@ export const en: LocaleDict = {
     signedInAs: '{name} signed in',
     roles: { waiter: 'Waiter', kitchen: 'Kitchen', cashier: 'Cashier', manager: 'Manager' },
     demoHint: 'Demo environment — PINs: 1234 manager · 2345 cashier · 3456 kitchen',
+  },
+
+waiter: {
+    title: 'Floor',
+    calls: 'Calls',
+    callsNone: 'No calls',
+    callsNoneBody: 'When a table calls, it appears here immediately.',
+    onMyWay: 'On my way',
+    toDeliver: 'Ready to run',
+    toDeliverNone: 'Nothing ready right now',
+    toDeliverNoneBody: 'When the kitchen marks an order ready, it appears here.',
+    deliver: 'Delivered to table',
+    tables: 'Tables',
+    tablesNone: 'No open tables',
+    waiting: 'waiting {t}',
+    urgent: 'Waiting a long time',
+    newCall: 'Table {n} is calling',
+    orderReady: 'Table {n} — order ready',
+    alertOn: 'Alerts on',
+    alertOff: 'Turn on alerts',
+    alertHint: 'Tap to allow vibration and sound on new calls.',
   },
 
   counter: {

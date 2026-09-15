@@ -19,7 +19,7 @@ export function Launcher() {
   const [table, setTable] = useState(7);
 
   const roles: Array<{
-    key: 'customer' | 'kitchen' | 'counter';
+    key: 'customer' | 'kitchen' | 'waiter' | 'counter';
     icon: IconName;
     to: string;
     accent: string;
@@ -27,6 +27,7 @@ export function Launcher() {
   }> = [
     { key: 'customer', icon: 'tablet', to: `/mesa/${table}`, accent: 'from-azul-500 to-azul-700', ring: 'group-hover:ring-azul-300' },
     { key: 'kitchen', icon: 'kitchen', to: '/cozinha', accent: 'from-cal-700 to-azul-900', ring: 'group-hover:ring-cal-400' },
+    { key: 'waiter', icon: 'users', to: '/sala', accent: 'from-oliva-400 to-oliva-600', ring: 'group-hover:ring-oliva-300' },
     { key: 'counter', icon: 'counter', to: '/balcao', accent: 'from-barro-400 to-barro-600', ring: 'group-hover:ring-barro-300' },
   ];
 
@@ -84,7 +85,7 @@ export function Launcher() {
       </div>
 
       <div className="mx-auto max-w-5xl px-6 pb-16 sm:px-8">
-        <div className="-mt-8 grid gap-4 sm:grid-cols-3">
+        <div className="-mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {roles.map((role, i) => (
             <motion.button
               key={role.key}

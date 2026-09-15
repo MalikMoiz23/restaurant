@@ -13,6 +13,8 @@ export const fr: LocaleDict = {
     kitchenDesc: 'Commandes en direct par poste, avec les temps d’attente.',
     counter: 'Comptoir & Gestion',
     counterDesc: 'Additions, partages, plan de salle et rapports.',
+    waiter: 'Salle (Serveur)',
+    waiterDesc: 'Appels des tables et plats prêts à servir.',
     demoTable: 'Table de démonstration',
   },
 
@@ -222,6 +224,27 @@ export const fr: LocaleDict = {
     signedInAs: 'Session de {name}',
     roles: { waiter: 'Serveur', kitchen: 'Cuisine', cashier: 'Caisse', manager: 'Gérant' },
     demoHint: 'Environnement de démonstration — codes : 1234 gérant · 2345 caisse · 3456 cuisine',
+  },
+
+waiter: {
+    title: 'Salle',
+    calls: 'Appels',
+    callsNone: 'Aucun appel',
+    callsNoneBody: 'Quand une table appelle, cela apparaît ici immédiatement.',
+    onMyWay: 'J’arrive',
+    toDeliver: 'Prêt à servir',
+    toDeliverNone: 'Rien de prêt pour le moment',
+    toDeliverNoneBody: 'Quand la cuisine marque une commande prête, elle apparaît ici.',
+    deliver: 'Servi à la table',
+    tables: 'Tables',
+    tablesNone: 'Aucune table ouverte',
+    waiting: 'en attente depuis {t}',
+    urgent: 'En attente depuis longtemps',
+    newCall: 'La table {n} appelle',
+    orderReady: 'Table {n} — commande prête',
+    alertOn: 'Alertes activées',
+    alertOff: 'Activer les alertes',
+    alertHint: 'Touchez pour autoriser vibration et son sur les nouveaux appels.',
   },
 
   counter: {
