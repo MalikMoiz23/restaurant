@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
-import { q, one, tx, audit, broadcast } from '../core.js';
+import { q, one, tx, audit, broadcast, estimateMinutes } from '../core.js';
 
 const tableStatus = z.enum([
   'free', 'occupied', 'ordering', 'eating', 'awaiting_bill', 'needs_cleaning',
@@ -214,7 +214,8 @@ async function withSessionDetail(session: any) {
               'id', oi.id, 'menuItemId', oi.menu_item_id, 'name', oi.name_snapshot,
               'unitPriceCents', oi.unit_price_cents, 'vatRate', oi.vat_rate,
               'qty', oi.qty, 'note', oi.note, 'seatNo', oi.seat_no, 'station', oi.station,
-              'glyph', (select glyph from menu_item where id = oi.menu_item_id)
+              'glyph', (select glyph from menu_item where id = oi.menu_item_id),
+              'prepMinutes', (select prep_minutes from menu_item where id = oi.menu_item_id)
             ) order by oi.name_snapshot) filter (where oi.id is not null), '[]') as items
        from customer_order o
        left join order_item oi on oi.order_id = o.id
@@ -223,6 +224,15 @@ async function withSessionDetail(session: any) {
       order by o.seq`,
     [session.id],
   );
+
+  // Each order carries its own estimate so the guest can be told when
+  // that specific order should land, not just the table as a whole.
+  for (const order of orders) {
+    order.estimated_minutes = estimateMinutes(order.items);
+    order.ready_estimate_at = new Date(
+      new Date(order.placed_at).getTime() + order.estimated_minutes * 60_000,
+    ).toISOString();
+  }
 
   const totals = await one(
     `select net_cents, vat_13_cents, vat_23_cents, gross_cents, line_count

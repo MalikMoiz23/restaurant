@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
-import { q, one, tx, audit, broadcast } from '../core.js';
+import { q, one, tx, audit, broadcast, estimateMinutes } from '../core.js';
 
 const orderStatus = z.enum(['received', 'preparing', 'ready', 'served', 'cancelled']);
 
@@ -37,7 +37,7 @@ export default async function orderRoutes(app: FastifyInstance) {
     const ids = [...new Set(body.items.map((i) => i.menuItemId))];
     const menu = await q(
       `select m.id, m.price_cents, m.vat_rate, m.available, m.kitchen_station,
-              coalesce(i.name, m.sku) as name
+              m.prep_minutes, coalesce(i.name, m.sku) as name
          from menu_item m
          left join menu_item_i18n i on i.item_id = m.id and i.locale = 'pt'
         where m.id = any($1::int[])`,
@@ -99,7 +99,24 @@ export default async function orderRoutes(app: FastifyInstance) {
       status: 'eating',
     });
 
-    return reply.code(201).send({ id: created.id, seq: created.seq, status: created.status });
+    // Quote the wait back immediately, so the confirmation screen can
+    // tell the guest when to expect the food rather than just "sent".
+    const estimatedMinutes = estimateMinutes(
+      body.items.map((line) => ({
+        prepMinutes: byId.get(line.menuItemId)!.prep_minutes as number,
+        qty: line.qty,
+      })),
+    );
+
+    return reply.code(201).send({
+      id: created.id,
+      seq: created.seq,
+      status: created.status,
+      estimatedMinutes,
+      readyEstimateAt: new Date(
+        new Date(created.placed_at).getTime() + estimatedMinutes * 60_000,
+      ).toISOString(),
+    });
   });
 
   /**
@@ -132,6 +149,15 @@ export default async function orderRoutes(app: FastifyInstance) {
         order by o.placed_at`,
       [station],
     );
+
+    // The kitchen sees the same estimate the guest was quoted, so a
+    // ticket drifting past it is visible on both screens at once.
+    for (const row of rows) {
+      row.estimated_minutes = estimateMinutes(row.items);
+      row.ready_estimate_at = new Date(
+        new Date(row.placed_at).getTime() + row.estimated_minutes * 60_000,
+      ).toISOString();
+    }
     return rows;
   });
 

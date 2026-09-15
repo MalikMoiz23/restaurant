@@ -101,6 +101,35 @@ export function billTotals(lines: BillLine[]) {
   };
 }
 
+// ---------------------------------------------------------------------
+// Prep-time estimate
+// ---------------------------------------------------------------------
+
+/**
+ * How long an order should take, in minutes.
+ *
+ * This is a HEURISTIC, not a measurement. We have no historical cook
+ * times yet, so it is derived from each dish's configured prep_minutes:
+ * a kitchen works several dishes in parallel, so the slowest dish sets
+ * the floor, and each additional plate adds a little on top for the
+ * pass. Tuned to under-promise rather than over-promise, because a
+ * guest forgives early food and remembers late food.
+ *
+ * Replace this with a model fitted to real ready_at - placed_at data
+ * once the pilot has collected a few weeks of service.
+ */
+export function estimateMinutes(
+  items: Array<{ prepMinutes: number; qty: number }>,
+): number {
+  if (!items.length) return 0;
+  const slowest = Math.max(...items.map((i) => i.prepMinutes));
+  const plates = items.reduce((sum, i) => sum + i.qty, 0);
+  // Half a minute per extra plate, capped so a large table does not get
+  // quoted an absurd number.
+  const passOverhead = Math.min(15, Math.ceil((plates - 1) * 0.5));
+  return slowest + passOverhead;
+}
+
 /**
  * Splits an amount N ways without losing or inventing a cent.
  * The remainder is spread one cent at a time across the first shares.
