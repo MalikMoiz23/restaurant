@@ -16,7 +16,7 @@ Three client applications over one backend, all in this repository:
 
 | App | Route | Who uses it |
 |---|---|---|
-| Table tablet | `/mesa/:n` | The guest — menu, allergen filters, cart, live order status, running bill, waiter call |
+| Table tablet | `/mesa/:n` | The guest — tap-to-order menu, allergen filters, order review, live status with time estimate, running bill, waiter call |
 | Kitchen display | `/cozinha` | The kitchen — tickets by station, three lanes, colour-coded waiting times |
 | Counter & management | `/balcao` | Staff — floor plan, bills, splits, payment, sales calendar, day close-out, audit trail |
 
@@ -73,6 +73,22 @@ apps/web/
 scripts/            Database, dev runner, icon generation
 ```
 
+## How a guest orders
+
+1. **Tap a dish.** It is added. Tap again for another. A chosen dish
+   gains a green ring and a minus/count/plus row.
+2. **Open the order bar** at the bottom — it shows how many items, how
+   long, and how much.
+3. **Review**, adjust quantities, add a note for the kitchen.
+4. **Send to the kitchen.** A confirmation names the order number and
+   the time the food should arrive.
+5. **Add more at any time** during the meal. The table stays open and
+   each new order gets its own number and estimate.
+6. **Pay at the counter** by table number.
+
+A four-step guide is shown once per device and stays available from the
+info button in the header.
+
 ## Design decisions worth knowing
 
 **Money is integer cents, everywhere.** No floats touch a price.
@@ -93,6 +109,15 @@ later never rewrites a bill that has already been printed.
 
 **Split shares never lose a cent.** The remainder is distributed one
 cent at a time across the first shares.
+
+**The prep-time estimate is a heuristic, and is labelled as one.**
+There is no historical cook-time data yet, so `estimateMinutes` in
+`apps/api/src/core.ts` derives it from each dish's configured
+`prep_minutes`: the slowest dish sets the floor, each extra plate adds
+half a minute for the pass, capped. It is computed server-side so the
+guest and the kitchen are quoted the same number. Replace it with a
+model fitted to real `ready_at - placed_at` once the pilot has run for
+a few weeks.
 
 **The illustration system is drawn, not photographed.** Six vessel
 forms — plate, bowl, cup, glass, bottle, board — plus a colour scheme
