@@ -55,6 +55,7 @@ Open <http://localhost:5173> and pick a device role.
 | 2345 | Bruno Costa | Cashier |
 | 3456 | Rui Alves | Kitchen |
 | 4567 | Inês Martins | Waiter |
+| 5678 | Tiago Ferreira | Waiter |
 
 ## Layout
 
@@ -70,7 +71,7 @@ apps/web/
   src/lib/          API client, live socket, Portuguese formatting, illustrations
   src/i18n/         pt · en · es · fr
   src/ui/           Design system
-  src/screens/      The three applications
+  src/screens/      The four applications
 scripts/            Database, dev runner, icon generation
 ```
 
@@ -161,6 +162,6 @@ itself whenever a sleeping tablet wakes.
 
 ## Not built yet
 
-Cloud sync worker, analytics beyond the sales calendar, prep-time
-estimates for guests, loyalty, reservations, and inventory-linked
-sold-out hiding. See the project plan for the full phase-2 backlog.
+Cloud sync worker, analytics beyond the sales calendar, loyalty,
+reservations, post-meal feedback, and inventory-linked sold-out hiding.
+See the project plan for the full phase-2 backlog.
