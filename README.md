@@ -12,12 +12,13 @@ a certified invoicing provider.
 
 ## What is here
 
-Three client applications over one backend, all in this repository:
+Four client applications over one backend, all in this repository:
 
 | App | Route | Who uses it |
 |---|---|---|
 | Table tablet | `/mesa/:n` | The guest — tap-to-order menu, allergen filters, order review, live status with time estimate, running bill, waiter call |
 | Kitchen display | `/cozinha` | The kitchen — tickets by station, three lanes, colour-coded waiting times |
+| Waiter floor app | `/sala` | The waiter — table calls, food ready to run, table status |
 | Counter & management | `/balcao` | Staff — floor plan, bills, splits, payment, sales calendar, day close-out, audit trail |
 
 The backend is a Fastify API with a WebSocket channel, designed to run
